@@ -50,7 +50,6 @@
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
     "autoprefixer": "^10.4.19",
-    "cnjm-postcss-px-to-viewport": "^1.0.1",
     "commitlint": "^19.3.0",
     "eslint": "^9.2.0",
     "eslint-config-prettier": "^9.1.0",
