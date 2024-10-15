@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper text-base">
-    <router-view v-slot="{ Component }">
+    <router-view v-if="reloadStore.isRouterAlive" v-slot="{ Component }">
       <keep-alive :include="cachedViews">
         <component :is="Component" />
       </keep-alive>
