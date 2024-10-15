@@ -1,6 +1,7 @@
 <template>
   {{ accountStore?.account }}
   {{ $t("dui-huan") }}
+  <BackIcon />
   {{ $t("zi-chan") }}
   MC:{{ amount }}
   <ApproveButton
@@ -22,7 +23,7 @@ import { config } from "@/config";
 import useStore from "@/store";
 import ApproveButton from "@/components/ApproveButton.vue";
 import flashMallContract from "@/contract/flashMallContract";
-
+import BackIcon from "@/components/BackIcon.vue";
 const { accountStore } = useStore();
 const amount = ref(0);
 const getBalance = async () => {

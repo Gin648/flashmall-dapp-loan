@@ -14,3 +14,9 @@ export const formatBalance = (
   value = Number(value.match(regex));
   return value;
 };
+
+export function openLink(url?: string) {
+  console.log(window.location);
+  const openUrl = `${window.location?.origin}`;
+  window.location.href = openUrl;
+}
