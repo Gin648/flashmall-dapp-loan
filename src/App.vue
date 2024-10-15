@@ -5,15 +5,26 @@
         <component :is="Component" />
       </keep-alive>
     </router-view>
+
+    <LoginPop v-if="!accountStore.isLogin" @login="login" />
+    <RegisterPop v-else />
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted } from "vue";
+import useStore from "@/store";
 import { useCachedViewStoreHook } from "@/store/modules/cachedView";
-import { useDarkMode } from "@/hooks/useToggleDarkMode";
-import { computed } from "vue";
+import { useAccount } from "@/hooks/useAccount";
+
+const { accountStore, reloadStore } = useStore();
+const { listenWallet, connectWallet, login } = useAccount();
 const cachedViews = computed(() => {
   return useCachedViewStoreHook().cachedViewList;
+});
+onMounted(async () => {
+  connectWallet();
+  listenWallet();
 });
 </script>
 

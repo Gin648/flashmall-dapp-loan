@@ -57,3 +57,109 @@ a:hover {
 .dark::view-transition-new(root) {
   z-index: 1;
 }
+
+.btn-shadow {
+  box-shadow:
+    4px 4px 12px rgba(220, 127, 1, 0.2),
+    inset -4px -4px 12px #ff8a00,
+    inset 2px 4px 4px rgba(255, 251, 238, 0.2) !important;
+}
+
+.btn-orange {
+  background: linear-gradient(
+    274.97deg,
+    #fea021 4.2%,
+    #ffc350 98.78%
+  ) !important;
+  box-shadow: inset 0px -7px 3px rgba(255, 147, 0, 0.67) !important;
+  border-radius: 40px !important;
+  order: 2 !important;
+}
+.btn-black {
+  border: 2px solid #2e2008;
+  background: #fea021;
+  box-shadow: 1px 2px 0px 0px #2e2008;
+}
+
+.btn-red {
+  background: linear-gradient(274.97deg, #fe2156 4.2%, #ff7092 98.78%);
+  box-shadow: inset 0px -7px 3px 0px rgba(234, 22, 73, 0.67);
+  border-radius: 40px;
+  order: 2;
+}
+
+.btn-yellow {
+  background: #fed73a !important;
+  color: #2e2008;
+}
+.btn-pink {
+  border-radius: 40px;
+  background: var(--, linear-gradient(90deg, #fd4328 0%, #fd289b 100%));
+  box-shadow: 0px -7px 3px 0px rgba(206, 40, 70, 0.67) inset;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  -ms-border-radius: 40px;
+  -o-border-radius: 40px;
+}
+.btn-linear-primary {
+  background: linear-gradient(99deg, #fed53a 11.58%, #ffa122 97.33%);
+  box-shadow: 0px -2px 1px 0px rgba(248, 139, 11, 0.4) inset;
+}
+
+.bg-orange-linear {
+  background: linear-gradient(180deg, #ffefd6 0%, #f9f7f4 14.58%);
+}
+.bg-yellow-linear {
+  background: linear-gradient(90deg, rgba(254, 215, 58, 0.2) 0%, #fed73a 100%);
+}
+.no-wrap {
+  white-space: nowrap;
+}
+
+.loadingClass {
+  background: unset;
+  .van-toast__loading {
+    color: #ffc350 !important;
+  }
+}
+
+.half-shadow {
+  box-shadow: inset 0px -4px 1px #ffd489;
+}
+
+.asset-max-width {
+  max-width: calc(100% - 105px);
+}
+.list-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    height: 20px !important;
+    width: 3px !important;
+  }
+  /* 两个滚动条交接处 -- x轴和y轴 */
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+
+  /* 滚动条滑块 */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    // -webkit-box-shadow: inset 0 0 5px red;
+    background: #eedec3;
+  }
+
+  /* 滚动条轨道 */
+  &::-webkit-scrollbar-track {
+    // -webkit-box-shadow: inset 0 0 5px blue;
+    border-radius: 10px;
+    opacity: 0.3;
+    background: rgba(238, 222, 195, 0.3);
+  }
+}
+.parent-view {
+  @apply relative z-0 h-full overflow-auto;
+}
+.child-view {
+  @apply fixed sm:top-[10%] sm:rounded-xl top-0 sm:left-[50%] sm:-translate-x-[50%] left-0 sm:w-[375px] w-full sm:max-h-[80vh] h-full overflow-auto z-50 bg-gradient-to-b from-primary-008/[1] to-primary-009;
+}
