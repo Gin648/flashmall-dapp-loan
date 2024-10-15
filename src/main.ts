@@ -8,12 +8,13 @@ import "./styles/index.less";
 import "./styles/tailwind.css";
 // svg icon
 import "virtual:svg-icons-register";
-
+import i18n from "@/i18n";
 import App from "./App.vue";
 import router from "./router";
 
 const app = createApp(App);
 app.use(store);
+app.use(i18n);
 app.use(router);
 
 app.mount("#app");

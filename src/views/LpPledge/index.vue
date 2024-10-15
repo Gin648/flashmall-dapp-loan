@@ -1,5 +1,5 @@
 <template>
-  <div>58885</div>
+  <div>{{ $t("demo.tabbar.home") }}</div>
 </template>
 
 <script setup lang="ts">
