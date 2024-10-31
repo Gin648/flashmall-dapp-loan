@@ -18,11 +18,11 @@
         class="h-[80px] flex justify-center items-center relative overflow-hidden"
       >
         <img class="absolute w-full h-full" src="@/assets/images/topPop.png" />
-        <span class="relative">{{ $t("invite.register") }}</span>
+        <span class="relative">{{ $t("zhu-ce") }}</span>
       </div>
       <VanField
         v-model="inviteAddress"
-        :placeholder="$t('invite.pleaseInputInvite')"
+        :placeholder="$t('qing-shu-ru-yao-qing-ma')"
       />
       <van-button
         class="mt-2 w-[90%] mx-auto btn-orange btn-shadow text-white"
@@ -30,14 +30,8 @@
         :disabled="!inviteAddress"
         @click="handleRegister"
       >
-        {{ $t("invite.clickRegister") }}</van-button
+        {{ $t("dian-ji-jin-hang-zhu-ce") }}</van-button
       >
-      <!-- <div v-if="!inviteAddress">{{ $t('invite.registerTip') }}</div>
-      <template v-else>
-         <van-button class="mt-2 w-[90%] mx-auto btn-orange btn-shadow text-white" @click="handleRegister" :loading="btnLoading">
-        {{$t('invite.clickRegister')}}
-      </van-button>
-      </template> -->
     </div>
   </VanPopup>
 </template>

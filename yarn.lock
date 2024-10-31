@@ -773,7 +773,7 @@
   dependencies:
     "@ethersproject/logger" "^5.7.0"
 
-"@ethersproject/providers@5.7.2":
+"@ethersproject/providers@5.7.2", "@ethersproject/providers@^5.7.2":
   version "5.7.2"
   resolved "https://registry.npmmirror.com/@ethersproject/providers/-/providers-5.7.2.tgz#f8b1a4f275d7ce58cf0a2eec222269a08beb18cb"
   integrity sha512-g34EWZ1WWAVgr4aptGlVBF8mhl3VWjv+8hoAnzStu8Ah22VHBsuGzP17eb6xDVRzw895G4W7vvx60lFFur/1Rg==
@@ -6756,6 +6756,14 @@ xtend@~4.0.1:
   version "4.0.2"
   resolved "https://registry.npmmirror.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
+
+xycontract@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/xycontract/-/xycontract-1.0.2.tgz#7ccb8fc3a9e51f89384a240039f06e3604292222"
+  integrity sha512-/oS1h+aFBmgg8cCo7P2BsaxvdhzOZU+6Z167W5Acu+fYsCRycd0lk0uwgflTzgi0eBA5+1Xd8Wi5YuOjuGT6kQ==
+  dependencies:
+    "@ethersproject/providers" "^5.7.2"
+    ethers "^5.6.9"
 
 y18n@^5.0.5:
   version "5.0.8"
