@@ -1,4 +1,3 @@
-import type { JsonRpcSigner } from "@ethersproject/providers";
 import { ethers } from "ethers";
 
 import { toLowerCase } from "./utils";
@@ -9,6 +8,7 @@ import { erc20Contract } from "@/contract/erc20Contract";
 // abi
 import Erc20Abi from "@/abi/Erc20.json";
 import FlashMallAbi from "@/abi/FlashMall.json";
+import type { ContractRunner } from "ethers/providers";
 const isLogin = () => {
   const user: any = JSON.parse(localStorage.getItem("user"));
   const account = user.account;
@@ -27,17 +27,17 @@ const isLogin = () => {
 // provider
 let provider;
 try {
-  provider = new ethers.providers.Web3Provider(window.ethereum);
+  provider = new ethers.BrowserProvider(window.ethereum);
 } catch (error) {
-  provider = new ethers.providers.JsonRpcProvider(config.provider);
+  provider = new ethers.JsonRpcProvider(config.provider);
 }
 
-export const signer: JsonRpcSigner = provider.getSigner();
+export const signer: ContractRunner = await provider.getSigner();
 
 export const getContract = (abi: any, address: string) => {
-  const signerOrProvider = signer;
+  const signerOrProvider = new ethers.Contract(address, abi, provider);
   if (!isLogin()) return;
-  return new ethers.Contract(address, abi, signerOrProvider);
+  return signerOrProvider;
 };
 
 export const getErc20ContractInstance = (address: string) => {

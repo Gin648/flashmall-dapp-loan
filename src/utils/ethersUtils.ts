@@ -1,10 +1,7 @@
-import { ethers } from "ethers";
+import { ethers, toBeArray } from "ethers";
 import { showToast } from "vant";
-import { BigNumber } from "@ethersproject/bignumber";
-
 import { signer } from "./contractHelper";
 import { toastMsg } from "@/utils/toast";
-
 import useStore from "@/store";
 import { config } from "@/config";
 import { formatBigNumber } from "@/utils/formatBalance";
@@ -12,9 +9,9 @@ import { formatBigNumber } from "@/utils/formatBalance";
 const ethereum: any = window.ethereum;
 let provider;
 try {
-  provider = new ethers.providers.Web3Provider(window.ethereum);
+  provider = new ethers.BrowserProvider(window.ethereum);
 } catch (error) {
-  provider = new ethers.providers.JsonRpcProvider(config.provider);
+  provider = new ethers.JsonRpcProvider(config.provider);
 }
 
 // 统一错误返回
@@ -40,9 +37,7 @@ export const connectWallet = async () => {
     });
     accountStore.changeAccount(accounts[0]);
     const ethChainId = await window.ethereum.request({ method: "eth_chainId" });
-    const ethChainNumberId = ethers.utils.hexlify(
-      parseInt(config.ethChainNumberId)
-    );
+    const ethChainNumberId = ethers.hexlify(toBeArray(config.ethChainNumberId));
 
     if (ethChainId !== ethChainNumberId) {
       window.ethereum
@@ -72,7 +67,7 @@ export const connectWallet = async () => {
 export const signData = async (message: string) => {
   const { accountStore } = useStore();
   if (!accountStore.account) await connectWallet();
-  const signer = provider.getSigner();
+  const signer = await provider.getSigner();
   try {
     // const signature = await window.ethereum.request({
     //   method: 'personal_sign',
@@ -92,7 +87,7 @@ export const signData = async (message: string) => {
  */
 export const hashMessage = async (message: string) => {
   try {
-    const resp = await ethers.utils.hashMessage(message);
+    const resp = await ethers.hashMessage(message);
     return successResult(resp);
   } catch (err) {
     console.error(err);
@@ -106,7 +101,7 @@ export const hashMessage = async (message: string) => {
  * @return {*}
  */
 export const transLegalAddress = (address: string) => {
-  const account = ethers.utils.getAddress(address);
+  const account = ethers.getAddress(address);
   return account;
 };
 
@@ -120,13 +115,13 @@ export const transfer = async (toAddress, value, options = {}) => {
   const transaction = {
     from: ethereum.selectedAddress,
     to: toAddress,
-    value: ethers.utils.parseEther(value)._hex,
+    value: ethers.parseEther(value),
     // "gas": "0x5208", // 21000
     // "gasPrice": "0x9184e72a000", // 10000000000000
-    // data: ethers.utils.formatBytes32String('hahah'), // 文本
-    // data: ethers.utils.hexlify(222), // 数字
+    // data: ethers.toUtf8String("hahah"), // 文本
+    // data: ethers.hexlify(toBeArray(222)), // 数字
     ...options
-    // chainId: ethers.utils.parseEther('56')._hex
+    // chainId: ethers.parseEther('56')
   };
   try {
     // const resp = await ethereum.request({ method: 'eth_sendTransaction', params: [transaction] })
@@ -156,13 +151,8 @@ export const getBalanceDefault = async (address?) => {
 };
 
 // add 10%
-export const calculateGasMargin = (
-  value: BigNumber,
-  margin = 1000
-): BigNumber => {
-  return value
-    .mul(BigNumber.from(10000).add(BigNumber.from(margin)))
-    .div(BigNumber.from(10000));
+export const calculateGasMargin = (value: bigint, margin = 1000n): BigInt => {
+  return value * 10000n + margin / 10000n;
 };
 
 export const getCurrentBlock = async () => {

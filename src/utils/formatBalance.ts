@@ -1,6 +1,5 @@
 import BigNumber from "bignumber.js";
-import { ethers } from "ethers";
-import { formatUnits } from "ethers/lib/utils";
+import { formatUnits, ethers } from "ethers";
 
 const BIG_TEN = new BigNumber(10);
 /**
@@ -44,19 +43,10 @@ export const formatNumber = (
 };
 
 /**
- * Method to format the display of wei given an ethers.BigNumber object
- * Note: does NOT round
+ * Convert a value in wei to a string in ether to display in a UI
  */
-export const formatBigNumber = (
-  number: ethers.BigNumber = toWei(0),
-  displayDecimals = 18,
-  decimals = 18
-) => {
-  const remainder = number.mod(
-    ethers.BigNumber.from(10).pow(decimals - displayDecimals)
-  );
-  const res = formatUnits(number.sub(remainder), decimals);
-  return res === "0.0" ? "0" : res;
+export const formatBigNumber = (number: ethers.BigNumberish) => {
+  return ethers.formatEther(number);
 };
 
 /**
@@ -64,7 +54,7 @@ export const formatBigNumber = (
  * Note: rounds
  */
 export const formatBigNumberToFixed = (
-  number: ethers.BigNumber,
+  number: ethers.BigNumberish,
   displayDecimals = 18,
   decimals = 18
 ) => {
@@ -76,18 +66,10 @@ export const formatBigNumberToFixed = (
  * Formats a FixedNumber like BigNumber
  * i.e. Formats 9763410526137450427.1196 into 9.763 (3 display decimals)
  */
-export const formatFixedNumber = (
-  number: ethers.FixedNumber,
-  displayDecimals = 18,
-  decimals = 18
-) => {
+export const formatFixedNumber = (number: ethers.FixedNumber) => {
   // Remove decimal
   const [leftSide] = number.toString().split(".");
-  return formatBigNumber(
-    ethers.BigNumber.from(leftSide),
-    displayDecimals,
-    decimals
-  );
+  return formatBigNumber(BigInt(leftSide));
 };
 
 /**
@@ -100,9 +82,9 @@ export function toWei(amount: string | number, tokenDecimals = 18) {
   if (typeof amount === "number") {
     amount = amount + "";
   }
-  return ethers.utils.parseUnits(amount, tokenDecimals);
+  return ethers.parseUnits(amount, tokenDecimals);
 }
 
-export function fromWei(amount: ethers.BigNumber): string {
-  return ethers.utils.formatUnits(amount, "ether");
+export function fromWei(amount: ethers.BigNumberish): string {
+  return ethers.formatUnits(amount, "ether");
 }

@@ -91,6 +91,7 @@ export const useAccount = () => {
     }
 
     const resp1: any = await queryLogin();
+
     loadingToggle(false);
     if (resp1.success) {
       accountStore.changeToken(resp1.data);

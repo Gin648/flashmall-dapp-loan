@@ -15,7 +15,7 @@ const flashMallContract = () => {
     const account = useAccount().getCurrentAccount();
     const tempAddress = address || account;
     const resp = await ContractInstance.read("parents", false, tempAddress);
-    return resp !== ethers.constants.AddressZero;
+    return resp !== ethers.ZeroAddress;
   };
   /**
    * trade 消费

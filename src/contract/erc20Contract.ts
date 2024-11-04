@@ -29,7 +29,7 @@ export const erc20Contract = (address: string) => {
   // 授权
   // @spender 合约地址
   const approve = async (spender: string, amount?: any) => {
-    const curAmount = amount > 0 ? toWei(amount) : ethers.constants.MaxUint256;
+    const curAmount = amount > 0 ? toWei(amount) : ethers.MaxUint256;
     return await erc20Contract.write("approve", spender, curAmount);
   };
 
