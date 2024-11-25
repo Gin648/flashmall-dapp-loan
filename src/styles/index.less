@@ -163,3 +163,31 @@ a:hover {
 .child-view {
   @apply fixed sm:top-[10%] sm:rounded-xl top-0 sm:left-[50%] sm:-translate-x-[50%] left-0 sm:w-[375px] w-full sm:max-h-[80vh] h-full overflow-auto z-50 bg-gradient-to-b from-primary-008/[1] to-primary-009;
 }
+
+
+
+@font-face {
+  font-family: 'Sans';
+  src: url('./fonts/WorkSans-VariableFont_wght.ttf');
+  font-display: swap;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Audiowide';
+  src: url('./fonts/Audiowide-Regular.ttf');
+  font-display: swap;
+  font-weight: normal;
+}
+
+
+// tab页面底部
+.safe-bottom-page {
+  padding-bottom: calc(@safe-bottom + 25px + 14px);
+}
+
+// tab底部
+.safe-bottom {
+  padding-bottom: calc(@safe-bottom + 20px);
+}
+
