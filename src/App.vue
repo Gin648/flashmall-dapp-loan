@@ -7,22 +7,44 @@
     </router-view>
 
     <LoginPop v-if="!accountStore.isLogin" @login="login" />
-    <RegisterPop v-else />
+    <RegisterPop v-if="!isRegister" :show="!isRegister" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import useStore from "@/store";
 import { useCachedViewStoreHook } from "@/store/modules/cachedView";
 import { useAccount } from "@/hooks/useAccount";
 import "vant/es/toast/style";
-
+import flashMallContract from "./contract/flashMallContract";
+const { parents } = flashMallContract();
 const { accountStore, reloadStore } = useStore();
 const { listenWallet, connectWallet, login } = useAccount();
 const cachedViews = computed(() => {
   return useCachedViewStoreHook().cachedViewList;
 });
+
+const isRegister = ref(true);
+
+// 获取用户是否注册
+const getIsRester = async () => {
+  if (!accountStore?.account) return;
+  isRegister.value = await parents();
+};
+
+watch(
+  () => accountStore?.sign,
+  newValue => {
+    if (newValue) {
+      getIsRester();
+    }
+  },
+  {
+    immediate: true,
+    deep: true
+  }
+);
 onMounted(async () => {
   connectWallet();
   listenWallet();

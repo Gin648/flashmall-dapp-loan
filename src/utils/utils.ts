@@ -16,7 +16,6 @@ export const formatBalance = (
 };
 
 export function openLink(url?: string) {
-  console.log(window.location);
-  const openUrl = `${window.location?.origin}`;
+  const openUrl = `${window.location?.origin}/#${url ? url : ""}`;
   window.location.href = openUrl;
 }

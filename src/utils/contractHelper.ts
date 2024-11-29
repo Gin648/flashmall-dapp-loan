@@ -1,7 +1,5 @@
 import { ethers } from "ethers";
 
-import { toLowerCase } from "./utils";
-
 import { config } from "@/config";
 import { erc20Contract } from "@/contract/erc20Contract";
 
@@ -9,20 +7,7 @@ import { erc20Contract } from "@/contract/erc20Contract";
 import Erc20Abi from "@/abi/Erc20.json";
 import FlashMallAbi from "@/abi/FlashMall.json";
 import type { ContractRunner } from "ethers/providers";
-const isLogin = () => {
-  const user: any = JSON.parse(localStorage.getItem("user"));
-  const account = user.account;
-  const sign = user.sign;
-  const token = user.token;
-  if (
-    account &&
-    sign.address &&
-    toLowerCase(account) === toLowerCase(sign.address) &&
-    token
-  )
-    return true;
-  else return false;
-};
+import useStore from "@/store";
 
 // provider
 let provider;
@@ -34,9 +19,17 @@ try {
 
 export const signer: ContractRunner = await provider.getSigner();
 
-export const getContract = (abi: any, address: string) => {
+export const getContract = (abi: any, address: string, isLogin = true) => {
   const signerOrProvider = new ethers.Contract(address, abi, provider);
-  if (!isLogin()) return;
+  if (isLogin) {
+    const { accountStore } = useStore();
+    if (
+      !accountStore.sign.address ||
+      !accountStore.sign.signature ||
+      !accountStore.sign.message
+    )
+      return;
+  }
   return signerOrProvider;
 };
 
@@ -51,6 +44,17 @@ export const getFlashMallContractInstance = (
 };
 
 export const getUsdtContract = (address: string = config.USDT) => {
-  if (!isLogin()) return;
+  const { accountStore } = useStore();
+  if (
+    !accountStore.sign.address ||
+    !accountStore.sign.signature ||
+    !accountStore.sign.message
+  )
+    return;
   return erc20Contract(address);
+};
+
+//给注册专用
+export const getFlashParents = (address: string = config.flashMall) => {
+  return getContract(FlashMallAbi, address, false);
 };

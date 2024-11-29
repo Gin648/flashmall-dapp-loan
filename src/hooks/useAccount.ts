@@ -6,7 +6,6 @@ import {
   signData as ethersSign,
   hashMessage
 } from "@/utils/ethersUtils";
-import { queryLogin } from "@/services/login";
 import { useLoading } from "@/hooks/useLoading";
 import useTokenBalanceStore from "@/store/modules/tokenBalance";
 
@@ -33,7 +32,6 @@ export const useAccount = () => {
       address: "",
       message: ""
     });
-    accountStore.changeToken("");
     accountStore.changeStore({});
     accountStore.changeUserInfo({});
     clearBalance();
@@ -61,6 +59,7 @@ export const useAccount = () => {
       signature: signnature
     };
     accountStore.changeSign(params);
+    accountStore.changeUsers(params);
     reloadStore.reload();
   };
 
@@ -88,22 +87,10 @@ export const useAccount = () => {
         signature: signnature
       };
       accountStore.changeSign(params);
+      accountStore.changeUsers(params);
     }
-
-    const resp1: any = await queryLogin();
-
     loadingToggle(false);
-    if (resp1.success) {
-      accountStore.changeToken(resp1.data);
-      reloadStore.reload();
-    } else {
-      accountStore.changeSign({
-        signature: "",
-        address: "",
-        message: ""
-      });
-    }
-    return resp1;
+    reloadStore.reload();
   };
 
   // 监听钱包

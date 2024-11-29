@@ -1,9 +1,6 @@
 import axios from "axios";
-
 import { Toast } from "vant";
-
 import i18n from "../i18n";
-
 import { config } from "@/config";
 import useStore from "@/store";
 import { useAccount } from "@/hooks/useAccount";
@@ -31,11 +28,8 @@ const request = <T>(
     headers.message = accountStore.sign.message;
     headers.signature = accountStore.sign.signature;
   }
-  if (accountStore.token) {
-    headers.authorized = accountStore.token;
-  }
   if (needToken) {
-    if (!accountStore.token || !accountStore.isSign) {
+    if (!accountStore.isSign) {
       return new Promise(resolve => {
         resolve({
           code: -1,

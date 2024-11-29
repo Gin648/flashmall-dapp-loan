@@ -6,7 +6,7 @@ import { toLowerCase } from "@/utils/utils";
 const useAccountStore = defineStore("user", {
   // 开启数据持久化
   persist: {
-    paths: ["account", "sign", "token", "store"]
+    paths: ["account", "users", "store", "sign"]
   },
   state: () => {
     return {
@@ -16,37 +16,43 @@ const useAccountStore = defineStore("user", {
         message: "",
         signature: ""
       },
-      token: "",
       store: {
         id: "",
         merchant: "",
         pers: "",
-        storeName: ""
+        storeName: "",
+        viewOnlyFlag: 0
       },
-      userInfo: {} as any
+      userInfo: {} as any,
+      users: {} as any
     };
   },
   getters: {
     isSign: state => {
-      const { account, sign } = state;
+      const { address, message, signature } = state.sign;
       if (
-        account &&
-        sign.address &&
-        toLowerCase(account) === toLowerCase(sign.address)
+        address &&
+        message &&
+        signature &&
+        toLowerCase(state.account) === toLowerCase(address)
       )
         return true;
       else return false;
     },
     isLogin: state => {
-      const { account, sign, token } = state;
+      const { address, signature, message } = state.sign;
       if (
-        account &&
-        sign.address &&
-        toLowerCase(account) === toLowerCase(sign.address) &&
-        token
+        address &&
+        message &&
+        signature &&
+        toLowerCase(state.account) === toLowerCase(address)
       )
         return true;
       else return false;
+    },
+    // 是否為店員僅查看客服
+    isOnlyView: state => {
+      return state.store?.viewOnlyFlag || 0;
     }
   },
   actions: {
@@ -56,8 +62,8 @@ const useAccountStore = defineStore("user", {
     changeSign(sign: Sign) {
       this.sign = sign;
     },
-    changeToken(token: string) {
-      this.token = token;
+    changeUsers(sign: Sign) {
+      this.users[sign.address || this.account] = sign;
     },
     changeStore(store: any) {
       this.store = store;

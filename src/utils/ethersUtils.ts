@@ -36,6 +36,15 @@ export const connectWallet = async () => {
       method: "eth_requestAccounts"
     });
     accountStore.changeAccount(accounts[0]);
+    // 這裡赋值sign
+    if (
+      accountStore.users[accounts[0]] &&
+      accountStore.users[accounts[0]].address &&
+      accountStore.users[accounts[0]].message &&
+      accountStore.users[accounts[0]].signature
+    ) {
+      accountStore.changeSign(accountStore.users[accounts[0]]);
+    }
     const ethChainId = await window.ethereum.request({ method: "eth_chainId" });
     const ethChainNumberId = ethers.hexlify(toBeArray(config.ethChainNumberId));
 
