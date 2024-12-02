@@ -15,6 +15,15 @@ const routes: Array<RouteRecordRaw> = [
         }
       }
     ]
+  },
+  {
+    path: "/ecology-loan",
+    name: "ecology-loan",
+    meta: {
+      title: "借贷",
+      tabBarShow: true
+    },
+    component: () => import("@/views/loan/index.vue")
   }
 ];
 

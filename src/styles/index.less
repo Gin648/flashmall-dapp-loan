@@ -58,6 +58,11 @@ a:hover {
   z-index: 1;
 }
 
+.app-bg {
+  background: linear-gradient(180deg, #fedb4d 0%, rgba(254, 219, 77, 0) 100%),
+    #f2f0ef;
+}
+
 .btn-shadow {
   box-shadow:
     4px 4px 12px rgba(220, 127, 1, 0.2),
@@ -164,22 +169,19 @@ a:hover {
   @apply fixed sm:top-[10%] sm:rounded-xl top-0 sm:left-[50%] sm:-translate-x-[50%] left-0 sm:w-[375px] w-full sm:max-h-[80vh] h-full overflow-auto z-50 bg-gradient-to-b from-primary-008/[1] to-primary-009;
 }
 
-
-
 @font-face {
-  font-family: 'Sans';
-  src: url('./fonts/WorkSans-VariableFont_wght.ttf');
+  font-family: "Sans";
+  src: url("./fonts/WorkSans-VariableFont_wght.ttf");
   font-display: swap;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: 'Audiowide';
-  src: url('./fonts/Audiowide-Regular.ttf');
+  font-family: "Audiowide";
+  src: url("./fonts/Audiowide-Regular.ttf");
   font-display: swap;
   font-weight: normal;
 }
-
 
 // tab页面底部
 .safe-bottom-page {
@@ -190,4 +192,3 @@ a:hover {
 .safe-bottom {
   padding-bottom: calc(@safe-bottom + 20px);
 }
-
