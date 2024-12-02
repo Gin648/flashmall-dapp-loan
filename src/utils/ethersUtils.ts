@@ -5,6 +5,7 @@ import { toastMsg } from "@/utils/toast";
 import useStore from "@/store";
 import { config } from "@/config";
 import { formatBigNumber } from "@/utils/formatBalance";
+import { toLowerCase } from "./utils";
 
 const ethereum: any = window.ethereum;
 let provider;
@@ -44,6 +45,12 @@ export const connectWallet = async () => {
       accountStore.users[accounts[0]].signature
     ) {
       accountStore.changeSign(accountStore.users[accounts[0]]);
+    }
+    if (
+      toLowerCase(accountStore.account) !==
+      toLowerCase(accountStore.store?.merchant)
+    ) {
+      accountStore.changeStore({});
     }
     const ethChainId = await window.ethereum.request({ method: "eth_chainId" });
     const ethChainNumberId = ethers.hexlify(toBeArray(config.ethChainNumberId));

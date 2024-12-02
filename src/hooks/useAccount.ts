@@ -8,6 +8,7 @@ import {
 } from "@/utils/ethersUtils";
 import { useLoading } from "@/hooks/useLoading";
 import useTokenBalanceStore from "@/store/modules/tokenBalance";
+import { queryShopInfo } from "@/services/shop";
 
 export const useAccount = () => {
   const { accountStore, reloadStore } = useStore();
@@ -114,12 +115,28 @@ export const useAccount = () => {
     }
   };
 
+  // 根据缓存获取当前的店铺信息，没有的话就通过接口获取
+  const getCurrentStoreId: any = async () => {
+    const { accountStore } = useStore();
+    if (accountStore.store?.id) {
+      return accountStore.store;
+    } else {
+      const resp = await queryShopInfo(accountStore.account);
+      if (resp.success) {
+        await accountStore.changeStore(resp.data);
+        return resp.data;
+      }
+      return {};
+    }
+  };
+
   return {
     getCurrentAccount,
     connectWallet,
     listenWallet,
     disConnectWallet,
     signData,
-    login
+    login,
+    getCurrentStoreId
   };
 };

@@ -23,12 +23,7 @@ export const getContract = (abi: any, address: string, isLogin = true) => {
   const signerOrProvider = new ethers.Contract(address, abi, provider);
   if (isLogin) {
     const { accountStore } = useStore();
-    if (
-      !accountStore.sign.address ||
-      !accountStore.sign.signature ||
-      !accountStore.sign.message
-    )
-      return;
+    if (!accountStore.isLogin) return;
   }
   return signerOrProvider;
 };
@@ -45,12 +40,7 @@ export const getFlashMallContractInstance = (
 
 export const getUsdtContract = (address: string = config.USDT) => {
   const { accountStore } = useStore();
-  if (
-    !accountStore.sign.address ||
-    !accountStore.sign.signature ||
-    !accountStore.sign.message
-  )
-    return;
+  if (!accountStore.isLogin) return;
   return erc20Contract(address);
 };
 
